@@ -1,0 +1,71 @@
+---
+- name: Install Uptime Kuma manually
+  vars:
+    dependencies:
+      - git
+      - npm
+    dest: /opt/uptime-kuma
+  hosts: uptimehost
+  tasks:
+    - name: HeartBeat init
+      ansible.builtin.ping:
+
+    - name: Update repositories and update package manager.
+      ansible.builtin.apt:
+        update_cache: true
+        upgrade: dist
+
+    - name: Install dependencies
+      ansible.builtin.apt:
+        pkg: "{{ dependencies }}"
+        state: latest
+      
+    - name: Get the latest branch of the git repository from updime
+      ansible.builtin.git:
+        repo: https://github.com/louislam/uptime-kuma.git
+        clone: yes
+        dest: "{{ dest }}"
+
+    - name: Running setup of Uptime Kuma
+      ansible.builtin.shell:
+        chdir: "{{ dest }}"
+        cmd: npm run setup
+        executable: /bin/bash
+      register: setup
+    
+    - name: Show setup
+      ansible.builtin.debug:
+        msg: "{{ setup }}"
+
+    - name: Install background npm 
+      ansible.builtin.shell:
+        chdir: "{{ dest }}"
+        cmd: npm install pm2 -g && pm2 install pm2-logrotate
+        executable: /bin/bash
+      register: background
+
+    - name: Show background
+      ansible.builtin.debug:
+        msg: "{{ background }}"
+
+    - name: Start the server
+      ansible.builtin.shell:
+        chdir: "{{ dest }}"
+        cmd: pm2 start server/server.js --name uptime-kuma
+        executable: /bin/bash
+      register: run
+
+    - name: Show the result running the server
+      ansible.builtin.debug:
+        msg: "{{ run }}"
+
+    - name: Generating daemon for startup
+      ansible.builtin.shell:
+        chdir: "{{ dest }}"
+        cmd: pm2 save && pm2 startup
+        executable: /bin/bash
+      register: startup
+
+    - name: Show the startup 
+      ansible.builtin.debug:
+        msg: "{{ startup }}"
