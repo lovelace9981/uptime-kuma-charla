@@ -1,11 +1,12 @@
 ### This repository consist in two parts
 
-#### Ansible
+### Ansible
 
 To deploy a new instance of uptime kuma fully automated, you just need to put your private 
 IPv4 in the ```inventory.yml```, that private IP is the server, make sure that you can use
 SSH public key auth for automatic auth.
 
+### Backup
 #### Json
 
 In this respository, we have a backup JSON to be deployed in the kuma service to have an initial
