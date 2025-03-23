@@ -1,0 +1,42 @@
+version: '3.7'
+
+services:
+  nginx:
+    image: nginx:stable
+    ports:
+      - "8080:80/tcp"
+    networks:
+      - monitor
+  redis:
+    build: ./redis 
+    ports:
+      - "6379:6379/tcp"
+    networks:
+      - monitor
+  kuma:
+    build: ./kuma
+    ports:
+      - "3001:3001/tcp"
+    networks:
+      - monitor
+    
+  postgres:
+    image: bitnami/postgresql:latest
+    ports:
+      - "5432:5432/tcp"
+    environment:
+      POSTGRESQL_POSTGRES_PASSWORD: password
+      POSTGRESQL_PASSWORD: password
+    networks:
+      - monitor
+
+  ollama:
+    image: ollama/ollama
+    ports:
+      - "11434:11434/tcp"
+
+networks:
+  monitor:
+
+volumes:
+  kuma-vol:
