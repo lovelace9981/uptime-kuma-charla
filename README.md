@@ -23,6 +23,10 @@ To deploy a new instance of uptime kuma fully automated, you just need to put yo
 IPv4 in the ```inventory.yml```, that private IP is the server, make sure that you can use
 SSH public key auth for automatic auth.
 
+```bash
+ansible-playbook -i inventory.yml kuma.yml
+```
+
 ### Backup
 #### Json
 
