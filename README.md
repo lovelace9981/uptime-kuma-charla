@@ -1,4 +1,21 @@
-### This repository consist in two parts
+## Container - Docker or Podman
+
+The container folder, contains a ```compose.yml``` file that mounts a internal network with the next services:
+- uptime-kuma
+- redis
+- postgresql
+- nginx
+
+This network is a demo, if you only needs the uptime-kuma, delete all the rest of the services, or make the image 
+to execute it in a container.
+
+```bash
+# In container/
+podman-compose up
+...
+
+# This should mount all the internal network with all the ports exposed.
+```
 
 ### Ansible
 
