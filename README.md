@@ -1,3 +1,13 @@
+## GDG Granada 2025
+
+
+![image](https://github.com/user-attachments/assets/24ac6acb-69b2-43ad-97e7-d14912c5e653)
+
+
+![image](https://github.com/user-attachments/assets/cb62b57d-e26a-4412-b6a2-a319f4059fda)
+
+
+
 ## Container - Docker or Podman
 
 The container folder, contains a ```compose.yml``` file that mounts a internal network with the next services:
